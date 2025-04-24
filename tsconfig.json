@@ -4,7 +4,6 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -13,6 +12,13 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "experimentalDecorators": true, // 允许使用实验性的装饰器特性
+    "emitDecoratorMetadata": true, // 为装饰器生成元数据
+    "strict": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": true, 
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true, 
     "plugins": [
       {
         "name": "next"
