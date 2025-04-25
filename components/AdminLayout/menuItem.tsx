@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect,useState } from "react";
+import React, { useEffect,useState,memo } from "react";
 import { isExternal } from "@/utils/vaildate";
 import { useRouter,usePathname } from "next/navigation";
 import { SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
@@ -35,4 +35,4 @@ const MenuItem = ({ title, icon,path }: MenuStruct) => {
     </div>
   );
 };
-export default MenuItem;
+export default memo(MenuItem);

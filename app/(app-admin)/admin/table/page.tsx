@@ -1,12 +1,14 @@
 'use client'
 import React, { useEffect } from 'react'
 import XwyaTable, { type TableColumns} from '@/components/XwyaTable';
-import usePage, { PageType} from '@/hooks/use-page';
+import usePage, { PageType } from '@/hooks/use-page';
+import useUserStore from '@/store/user';
+import {generateRandomId} from "@/utils"
 type Invoice = {
   invoice: string;
   paymentStatus: string;
   totalAmount: string;
-  paymentMethod: string;
+  paymentMethod: number | string;
 }
 const invoices = [
   {
@@ -68,20 +70,23 @@ const columns: TableColumns<Invoice>[] = [
   {
     key: "paymentMethod",
     header: "Payment Method",
+    cell: (item) => (<div data-auth={item.paymentMethod===0?"admin":"66" }>{item.paymentMethod}</div>)
   }
 ]
 const returnData =  () => { 
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(invoices);
+      // 随机生成十条不一样的用户数据
+      const data = invoices.map((item) => ({ ...item, key: generateRandomId(),invoice:generateRandomId(),paymentMethod:Math.floor(Math.random() * 2) }));
+      resolve(data);
     }, 1000);
   })
 }
 
 
 const TablePage = () => {
-  const {data, loading, page, total,setData,setLoading,setPage,setTotal} =usePage()
- 
+  const { data, loading, page, total, setData, setLoading, setPage, setTotal } = usePage()
+  const userInfo = useUserStore(state=> state.userInfo)
   const getData = async (page:PageType ={pageNum:1,pageSize:10}) => {
     setLoading(true)
     const res = await returnData() as any[]
@@ -98,6 +103,7 @@ const TablePage = () => {
   }
 
   useEffect(() => { 
+    console.log(userInfo);
     getData()
   },[])
   return (

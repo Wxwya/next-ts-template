@@ -5,6 +5,9 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/rely/ui_rely'
+import cache from '@/lib/cache';
+import { useRouter } from 'next/navigation';
+import { IsLogin } from '@/enums/cacheEnums';
 const formSchema = z.object({
   account: z.string().nonempty({message:"账号不能为空"}),
   password: z.string().min(6, {
@@ -17,6 +20,7 @@ const items:FormItemsProps[] = [
 ]
 
 const LoginForm = () => {
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
       resolver: zodResolver(formSchema),
       defaultValues: {
@@ -26,6 +30,8 @@ const LoginForm = () => {
   })
   const onFinish = (values: z.infer<typeof formSchema> ) => {
     console.log(values)
+    cache.setCookie(IsLogin, true)
+    router.push("/admin")
   }
   return (
     <XwyaForm  items={items} form={form} labelAlign="left" layout="vertical" onFinish={onFinish}>

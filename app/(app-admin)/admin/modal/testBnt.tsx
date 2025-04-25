@@ -23,6 +23,11 @@ export default function TestBnt() {
   return (
     <div>
       <div onClick={click}>点击测试</div>
+      <div data-auth="admin">admin</div>
+      <div data-auth="user">user</div>
+      <div data-auth="guest">guest</div>
+      <div data-auth="admin,user">admin,user</div>
+      <div data-auth="admin,guest">admin,guest</div>
     </div>
   )
 }

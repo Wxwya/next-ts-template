@@ -1,4 +1,5 @@
 import Cookies from "js-cookie"
+// import { cookies } from "next/headers";
 import { CacheEnums } from "@/enums/cacheEnums";
 import { isClient } from "@/utils";
 interface CookieOptions {
@@ -13,11 +14,24 @@ const cache = {
   local_key: CacheEnums.LOCAL_KEY,
   cookie_key: CacheEnums.COOKIE_KEY,
   session_key: CacheEnums.SESSION_KEY,
-  setCookie(key: string, value: any, option:CookieOptions= {}) { 
+  setCookie(key: string, value: any, option: CookieOptions = {}) { 
+    
     Cookies.set(this.cookie_key + key, value, option)
   },
-  getCookie(key: string):any{ 
+  getCookie(key: string): any{ 
+    if (isClient()) {
+     return this.clientGetCookie(key)
+    } else { 
+      return this.serverGetCookie(key)
+    }
+  },
+  clientGetCookie(key: string): any{
     return Cookies.get(this.cookie_key + key)
+  },
+  async serverGetCookie(key: string):Promise<any>{
+    const { cookies } = await import('next/headers');
+    const cookieStore = await cookies();
+    return cookieStore.get(this.cookie_key + key)?.value;
   },
   setLocalStorage(key: string, value: any, expire?: number) { 
     let data: any = {

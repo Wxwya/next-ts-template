@@ -1,5 +1,5 @@
 "use client";
-import React, { useState,useEffect} from "react";
+import React, { useState,useEffect,memo} from "react";
 import {Collapsible,CollapsibleTrigger,CollapsibleContent} from "@/components/ui/collapsible";
 import { SidebarMenuButton, SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton,  useSidebar } from "@/components/ui/sidebar";
 import useSystemStore,{ onChangeMenuGroupKeys } from "@/store/system";
@@ -63,4 +63,4 @@ const SubMenuItem = ({path,title,icon,routes}: MenuStruct) => {
     </Collapsible>
   );
 };
-export default SubMenuItem;
+export default memo(SubMenuItem);

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, Fragment, useEffect } from 'react'
+import React, { useState, Fragment, useEffect,memo } from 'react'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { avatar } from '@/utils/settings'
 import {
@@ -16,17 +16,38 @@ import {
 import { XwyaDropdownMenu, type DropdownMenuOptions } from '@/components/XwyaDropdownMenu'
 import { breadcrumbMap, BreadcrumbStruct } from './menu'
 import { usePathname } from 'next/navigation'
+import { onChangeUserInfo } from '@/store/user'
+import cache from '@/lib/cache'
 const options: DropdownMenuOptions[] = [
   { key: 'home', icon: 'solar--home-line-duotone', value: '返回首页' },
   { key: 'logout', className: '!text-red-600', icon: 'solar--square-share-line-broken', value: '退出登录' },
 ]
-const AppMainHead = () => {
+const AppMainHead = ({ info }: {info:SystemUser.UserInfo}) => {
   const pathname = usePathname()
   const [list, setList] = useState<BreadcrumbStruct[]>([])
-
+  const onChange = (row: DropdownMenuOptions) => { 
+    console.log(row);
+    switch (row.key) {
+      case 'home':
+        console.log("返回首页");
+        
+        // window.location.href = '/'
+        break
+      case 'logout':
+        cache.clearCookie()
+        location.reload()
+        // window.location.href = '/login'
+        break
+    }
+    
+  }
   useEffect(() => {
     setList(breadcrumbMap[window.location.pathname] || [])
   }, [pathname])
+  useEffect(() => { 
+  // console.log(info);
+    onChangeUserInfo(info)
+  },[])
   return (
     <div className=" sticky  left-0 top-0 z-50 px-4 pr-8 w-full  bg-[hsl(var(--background))] flex items-center justify-between border-b border-sidebar-border">
       <div className="flex h-14  items-center gap-4">
@@ -50,7 +71,7 @@ const AppMainHead = () => {
         </Breadcrumb>
       </div>
       <div>
-        <XwyaDropdownMenu options={options}>
+        <XwyaDropdownMenu options={options} onChange={onChange}>
           <div className="flex gap-4 items-center">
             {avatar ? (
               <Avatar>
@@ -66,4 +87,4 @@ const AppMainHead = () => {
   )
 }
 
-export default AppMainHead
+export default memo(AppMainHead)

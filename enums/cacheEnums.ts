@@ -12,3 +12,5 @@ export enum TokenEnums {
 }
 
 export const VERSION = "version"
+
+export const IsLogin = "isLogin"
