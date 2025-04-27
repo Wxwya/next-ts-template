@@ -7,8 +7,6 @@ export default function TestBnt() {
      title: "666",
      children: "teste",
      confirm: async () => { 
-       const res = await testPromise()
-       console.log(res)
        return false
      }
    })

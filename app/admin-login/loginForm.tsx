@@ -7,8 +7,7 @@ import { useForm } from 'react-hook-form'
 import { Button } from '@/rely/ui_rely'
 import cache from '@/lib/cache';
 import { useRouter } from 'next/navigation';
-import { IsLogin,TokenEnums } from '@/enums/cacheEnums';
-import { login } from '@/api/system';
+import { IsLogin} from '@/enums/cacheEnums';
 import { useSearchParams } from 'next/navigation';
 const formSchema = z.object({
   account: z.string().nonempty({message:"账号不能为空"}),
@@ -33,6 +32,7 @@ const LoginForm = () => {
       },
   })
   const onFinish = async (values: z.infer<typeof formSchema>) => {
+      console.log(values);
       cache.setCookie(IsLogin, true)
       router.push(redirect?decodeURIComponent(redirect):"/admin")
   }
