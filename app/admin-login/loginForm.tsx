@@ -7,7 +7,9 @@ import { useForm } from 'react-hook-form'
 import { Button } from '@/rely/ui_rely'
 import cache from '@/lib/cache';
 import { useRouter } from 'next/navigation';
-import { IsLogin } from '@/enums/cacheEnums';
+import { IsLogin,TokenEnums } from '@/enums/cacheEnums';
+import { login } from '@/api/system';
+import { useSearchParams } from 'next/navigation';
 const formSchema = z.object({
   account: z.string().nonempty({message:"账号不能为空"}),
   password: z.string().min(6, {
@@ -21,6 +23,8 @@ const items:FormItemsProps[] = [
 
 const LoginForm = () => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get("redirect") 
   const form = useForm<z.infer<typeof formSchema>>({
       resolver: zodResolver(formSchema),
       defaultValues: {
@@ -28,10 +32,9 @@ const LoginForm = () => {
         password: '',
       },
   })
-  const onFinish = (values: z.infer<typeof formSchema> ) => {
-    console.log(values)
-    cache.setCookie(IsLogin, true)
-    router.push("/admin")
+  const onFinish = async (values: z.infer<typeof formSchema>) => {
+      cache.setCookie(IsLogin, true)
+      router.push(redirect?decodeURIComponent(redirect):"/admin")
   }
   return (
     <XwyaForm  items={items} form={form} labelAlign="left" layout="vertical" onFinish={onFinish}>

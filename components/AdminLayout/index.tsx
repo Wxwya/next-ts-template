@@ -19,13 +19,13 @@ const variants = {
     },
   },
 }
-const Layout = ({ children, info }: { children: React.ReactNode, info: SystemUser.UserInfo }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   
   return (
     <SidebarProvider>
       <Sidebar   />
       <SidebarInset className=' overflow-x-hidden h-screen'>
-        <AppMainHead info={info} />
+        <AppMainHead  />
         <Suspense fallback={<div className='w-full h-full flex items-center justify-center'>Loading...</div> }>
         <BlurFade delay={0.25} variant={variants} className=" flex-grow" inView>
           <div className=" h-full p-4 auth-container">{children}</div>

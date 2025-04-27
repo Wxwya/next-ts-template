@@ -18,7 +18,7 @@ class HttpRequst {
       this.options.requestHooks.afterRequest = this.options.requestHooks.afterRequest.bind(this);
     }
   }
-  startTaskRequest(){
+  startTaskRequest() {
     this.isStartTask = true
     while (this.taskQueue.length > 0) { 
       if (!this.isRefreshing) {

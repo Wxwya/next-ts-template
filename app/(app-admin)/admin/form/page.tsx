@@ -1,5 +1,4 @@
 
-
 import React from 'react'
 import Simple from './simple'
 import Verify from './verify'
@@ -9,8 +8,9 @@ export const metadata: Metadata = {
   title: '表单示例',
   description: 'next-ts-templte',
 }
-export default function Form() {
 
+export default async function Form() {
+  // throw new Error('404')
   return (
     <div>
       <Simple />

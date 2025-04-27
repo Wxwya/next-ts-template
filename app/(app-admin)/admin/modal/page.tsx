@@ -1,7 +1,5 @@
-import React from 'react'
 import TestBnt from './testBnt'
-export default async function Modal() {
-  
+export default function Modal() {
   return (
     <div>
       <TestBnt />

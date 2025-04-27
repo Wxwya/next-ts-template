@@ -24,19 +24,21 @@ function handelAuth(el: HTMLElement) {
 
 let observer: MutationObserver
 const useAuth = () => {
-  if(observer || !isClient()) return 
-  observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.target.nodeType === 1) {
-        const deleteEl = handelAuth(mutation.target as HTMLElement)
-        if (deleteEl.length) {
-          deleteEl.forEach((el) => {
-            el.innerHTML = ""
-          })
+  if (!observer && isClient()) { 
+    observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.target.nodeType === 1) {
+          const deleteEl = handelAuth(mutation.target as HTMLElement)
+          if (deleteEl.length) {
+            deleteEl.forEach((el) => {
+              el.innerHTML = ""
+            })
+          }
         }
-      }
+      })
     })
-  })
+  } 
+  
   const startObserver = () => { 
     const dom = document.querySelector(".auth-container")
     const deleteEl = handelAuth(dom as HTMLElement)

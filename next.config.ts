@@ -8,6 +8,15 @@ const nextConfig: NextConfig = {
     loaderFile: "./image-loader.ts",
     // domains: ['127.0.0.1', "img1.baidu.com"], // 允许加载的图片源的主机名
   },
+  async redirects() {
+    return [
+      {
+        source: '/admin',
+        destination: '/admin/table',
+        permanent: false, 
+      },
+    ]
+  },
 
 };
 

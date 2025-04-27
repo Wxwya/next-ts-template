@@ -16,27 +16,25 @@ import {
 import { XwyaDropdownMenu, type DropdownMenuOptions } from '@/components/XwyaDropdownMenu'
 import { breadcrumbMap, BreadcrumbStruct } from './menu'
 import { usePathname } from 'next/navigation'
-import { onChangeUserInfo } from '@/store/user'
 import cache from '@/lib/cache'
+import useUserStore from '@/store/user'
 const options: DropdownMenuOptions[] = [
   { key: 'home', icon: 'solar--home-line-duotone', value: '返回首页' },
   { key: 'logout', className: '!text-red-600', icon: 'solar--square-share-line-broken', value: '退出登录' },
 ]
-const AppMainHead = ({ info }: {info:SystemUser.UserInfo}) => {
+const AppMainHead = () => {
   const pathname = usePathname()
+  const userInfo  = useUserStore(state => state.userInfo)
   const [list, setList] = useState<BreadcrumbStruct[]>([])
   const onChange = (row: DropdownMenuOptions) => { 
-    console.log(row);
     switch (row.key) {
       case 'home':
         console.log("返回首页");
-        
-        // window.location.href = '/'
+        window.location.href = '/'
         break
       case 'logout':
         cache.clearCookie()
-        location.reload()
-        // window.location.href = '/login'
+        window.location.href = '/admin-login'
         break
     }
     
@@ -44,10 +42,7 @@ const AppMainHead = ({ info }: {info:SystemUser.UserInfo}) => {
   useEffect(() => {
     setList(breadcrumbMap[window.location.pathname] || [])
   }, [pathname])
-  useEffect(() => { 
-  // console.log(info);
-    onChangeUserInfo(info)
-  },[])
+
   return (
     <div className=" sticky  left-0 top-0 z-50 px-4 pr-8 w-full  bg-[hsl(var(--background))] flex items-center justify-between border-b border-sidebar-border">
       <div className="flex h-14  items-center gap-4">
@@ -79,7 +74,7 @@ const AppMainHead = ({ info }: {info:SystemUser.UserInfo}) => {
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             ) : null}
-            <div>xwya</div>
+            <div>{ userInfo && userInfo.username}</div>
           </div>
         </XwyaDropdownMenu>
       </div>

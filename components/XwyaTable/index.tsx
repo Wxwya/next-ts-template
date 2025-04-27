@@ -37,11 +37,11 @@ const XwyaTable =<T=any,>({data = [],columns = [],total = 0,onChange,page,loadin
      <div className={className}>
       <div className=" flex-1">
         <Table className={cn("h-full  w-full",loading?' min-h-60 ':'') }>
-          <TableHeader className="bg-[rgba(0,0,0,0.02)]">
+          <TableHeader className="">
             <TableRow>
               {columns.map((item:TableColumns<T>,index:number) => (
-                <TableHead key={item.id as Key || item.key as Key} className={`text-[rgba(0,0,0,0.88)] py-2 font-bold ${item.className}` }>
-                  <div className="pr-2" style={{borderRight:index === columns.length - 1 ? 'none' : '1px solid #F0F0F0'}}>{  typeof item.header === 'function' ? item.header() : item.header}</div>
+                <TableHead key={item.id as Key || item.key as Key} className={` py-2 font-bold ${item.className}` }>
+                  <div className="pr-2" style={{borderRight:index === columns.length - 1 ? 'none' : '1px solid hsl(var(--sidebar-border))'}}>{  typeof item.header === 'function' ? item.header() : item.header}</div>
                 </TableHead>
               ))}
             </TableRow>

@@ -82,8 +82,6 @@ const returnData =  () => {
     }, 1000);
   })
 }
-
-
 const TablePage = () => {
   const { data, loading, page, total, setData, setLoading, setPage, setTotal } = usePage()
   const userInfo = useUserStore(state=> state.userInfo)
@@ -98,12 +96,9 @@ const TablePage = () => {
 
   const onChange = (pageNum: number, pageSize: number) => {
     getData({ pageNum, pageSize })
-    // console.log(pageNum, pageSize);
-    // setPage({pageNum,pageSize})
   }
 
   useEffect(() => { 
-    console.log(userInfo);
     getData()
   },[])
   return (

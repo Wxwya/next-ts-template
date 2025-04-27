@@ -1,6 +1,13 @@
-import { NextResponse } from 'next/server'
-export function middleware(req: Request) {
-  console.log('\x1b[32m%s\x1b[0m', `✅ ${req.url}`)
+import { NextRequest, NextResponse } from 'next/server'
+import authMiddleware from './middlewares/auth'
+// import isLoginAuth from './middlewares/isLogin'
+// import createMi
+export async function middleware(request:NextRequest) {
+  console.log('\x1b[32m%s\x1b[0m', `✅ ${request.nextUrl.pathname}`)
+  // const isLogin = await cache.getCookie(IsLogin)
+  // console.log(isLogin,"isLogin");
+  const auth = await authMiddleware(request)
+  if (auth) return auth
   return NextResponse.next()
 }
 

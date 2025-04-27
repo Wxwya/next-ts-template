@@ -8,7 +8,7 @@ class UserStore {
 }
 const useUserStore = create<UserStore>()(
   immer(
-    () => (new UserStore()),
+    () => ({...new UserStore()}),
   )
 );
 export const onChangeUserInfo = (userInfo: any) => {

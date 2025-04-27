@@ -1,14 +1,8 @@
 "use client"
 import React from 'react'
 import createModal from '@/utils/modal'
-// import { getVersion } from '@/api/system'
-const testPromise = ()=> new Promise((resolve) => {
-  setTimeout(() => {
-    resolve("666")
-  }, 2000)
-})
 export default function TestBnt() {
-  const click = () => { 
+  const click = async () => { 
     createModal({
      title: "666",
      children: "teste",
@@ -23,11 +17,11 @@ export default function TestBnt() {
   return (
     <div>
       <div onClick={click}>点击测试</div>
-      <div data-auth="admin">admin</div>
-      <div data-auth="user">user</div>
-      <div data-auth="guest">guest</div>
-      <div data-auth="admin,user">admin,user</div>
-      <div data-auth="admin,guest">admin,guest</div>
+      <div data-auth="admin" suppressHydrationWarning>admin</div>
+      <div data-auth="user" suppressHydrationWarning>user</div>
+      <div data-auth="guest" suppressHydrationWarning>guest</div>
+      <div data-auth="admin,user" suppressHydrationWarning>admin,user</div>
+      <div data-auth="admin,guest" suppressHydrationWarning>admin,guest</div>
     </div>
   )
 }

@@ -13,10 +13,11 @@ export enum RequestMethodsEnum {
 }
 
 export const RequestCodeEnum = {
-  SUCCESS:200,
-  FAILED: 400, 
+  SUCCESS: 200,
+  FAILED:400, 
   TOKEN_INVALID:[1001, 1002, 1003,1004,1005,401],
-  ServerError:500, 
+  SERVER_ERROR: 500, 
+  TOKEN_TIMEOUT: 1002,
 }
 
 export enum RequestErrMsgEnum {
