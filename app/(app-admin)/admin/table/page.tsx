@@ -15,6 +15,7 @@ const invoices = [
     paymentStatus: "Paid",
     totalAmount: "$250.00",
     paymentMethod: "Credit Card",
+    
   },
   {
     invoice: "INV002",
@@ -57,14 +58,18 @@ const columns: TableColumns<Invoice>[] = [
   {
     key: "invoice",
     header: "Invoice",
+    search:true
   },
   {
     key: "paymentStatus",
     header: "Payment Status",
+    filter: true,
+    filterOptions: [{label:"Paid",value:"Paid"},{label:"Pending",value:"Pending"},]
   },
   {
     key: "totalAmount",
     header: "Total Amount",
+    sort: true
   },
   {
     key: "paymentMethod",
@@ -101,7 +106,7 @@ const TablePage = () => {
   },[])
   return (
     <>
-      <XwyaTable  data={data} page={page} total={total} loading={loading}  onChange={onChange} columns={columns} />
+      <XwyaTable flex  data={data} page={page} total={total} loading={loading}  onChange={onChange} columns={columns} />
     </>
   )
 }

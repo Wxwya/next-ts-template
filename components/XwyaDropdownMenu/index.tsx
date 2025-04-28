@@ -18,9 +18,9 @@ export type DropdownMenuOptions = {
 type XwyaDropdownMenuProps = {
   options: DropdownMenuOptions[]
   children?: React.ReactNode,
-  contentConfig?: React.ComponentProps<typeof DropdownMenuContent>
+  contentConfig?:  React.ComponentPropsWithoutRef<typeof DropdownMenuContent>
   onChange?: (row:DropdownMenuOptions) => void
-} & React.ComponentProps<typeof DropdownMenu> 
+} &  React.ComponentPropsWithoutRef<typeof DropdownMenu> 
 
 export const XwyaDropdownMenu = (props: XwyaDropdownMenuProps) => {
   const { options, children, contentConfig,onChange, ...rest } = props

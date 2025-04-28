@@ -50,6 +50,7 @@ const useAuth = () => {
     observer.observe(dom as Node, {
       childList: true,
       subtree: true,
+      attributes: true,
     })
   }
   const stopObserver = () => {
