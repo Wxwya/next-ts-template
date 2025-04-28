@@ -1,4 +1,4 @@
-import { Fragment, ReactNode } from 'react'
+import { Fragment, Key, ReactNode } from 'react'
 import { Form, FormField, FormItem, FormControl, FormLabel, FormMessage, FormDescription } from '@/components/ui/form'
 import UploadFile from '@/components/UploadFile'
 import { Calendar } from '@/components/ui/calendar'
@@ -30,7 +30,7 @@ type FormContentProps = {
   placeholder?: string
   startPlaceholder?: string
   endPlaceholder?: string
-  options?: GlobalOptions[]
+  options?: GlobalOptions<string | number |boolean>[]
   multiple?: boolean
   accept?: string
   type?: string
@@ -117,12 +117,12 @@ const getTypeFormItem = (
             <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
                 <SelectTrigger className={`${field.value ? '' : 'text-muted-foreground'} w-full  !outline-0 aria-[invalid=true]:border-destructive  focus:ring-none`}>
-                  <SelectValue  {...data.content} />
+                  <SelectValue placeholder={data.content?.placeholder} />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {data.content!.options!.map((item: any) => (
-                  <SelectItem key={item.value} value={item.value}>
+                {data.content!.options!.map((item) => (
+                  <SelectItem key={item.value as Key} value={item.value as string}>
                     {item.label}
                   </SelectItem>
                 ))}
@@ -146,9 +146,9 @@ const getTypeFormItem = (
             <FormControl>
               <RadioGroup {...data.content} onValueChange={field.onChange} value={field.value}>
                 <div className=" flex gap-2 items-center flex-wrap">
-                  {data.content!.options!.map((item: GlobalOptions) => (
-                    <div className="flex items-center space-x-2" key={item.value}>
-                      <RadioGroupItem value={item.value} id={`${item.value}-radio`} />
+                  {data.content!.options!.map((item) => (
+                    <div className="flex items-center space-x-2" key={item.value as Key}>
+                      <RadioGroupItem value={item.value  as string} id={`${item.value}-radio`} />
                       <Label htmlFor={`${item.value}-radio`}>{item.label}</Label>
                     </div>
                   ))}
@@ -172,8 +172,8 @@ const getTypeFormItem = (
             </FormLabel>
             <FormControl>
               <div className=" flex gap-2 items-center flex-wrap">
-                {data.content!.options!.map((item: GlobalOptions) => (
-                  <div className="flex gap-2" key={item.value}>
+                {data.content!.options!.map((item) => (
+                  <div className="flex gap-2" key={item.value  as Key}>
                     <Checkbox
                       id={`${item.value}-checkbox`}
                       onCheckedChange={(checked) => {

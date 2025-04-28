@@ -38,10 +38,10 @@ export default function Simple() {
     resolver: zodResolver(schema),
     defaultValues:{
       input: '',
-      select: '',
+      select: "",
       textarea: '',
       checkbox: [],
-      radio:void 0,
+      radio:"",
       switch: false,
       date:void 0,
       range: {
@@ -71,7 +71,6 @@ export default function Simple() {
   const onTest = () => { 
     console.log(666);
     form.reset()
-    
   }
   return (
     <div>
@@ -80,7 +79,7 @@ export default function Simple() {
     { 
       <div className='flex gap-2'>
         <Button type="submit" >提交</Button>
-        <Button variant="outline" type='button' onClick={onTest}>重置</Button>
+        <Button variant="outline" type="reset" onClick={onTest}>重置</Button>
       </div>
     }
     </XwyaForm>

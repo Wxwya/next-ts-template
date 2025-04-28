@@ -1,5 +1,10 @@
+"use client";
 import { isClient } from "@/utils";
 import { useEffect } from "react"
+import { usePathname } from "next/navigation";
+import useUserStore from "@/store/user"
+import { notFound } from "next/navigation";
+import { generateRegex }from "@/utils/index"
 
 function handelAuth(el: HTMLElement) {
   let deleteEl:HTMLElement[] = []
@@ -24,6 +29,8 @@ function handelAuth(el: HTMLElement) {
 
 let observer: MutationObserver
 const useAuth = () => {
+  const pathname = usePathname()
+  const globalPath = useUserStore((state) => state.globalPath)
   if (!observer && isClient()) { 
     observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -60,6 +67,17 @@ const useAuth = () => {
     return () => {
       stopObserver()
     }
-  },[])
+  }, [])
+  useEffect(() => { 
+    if(!globalPath.length) return 
+    const flag = globalPath.some((path) => {
+      const regex = generateRegex(path)
+      return  (regex.test(pathname))
+    })
+    if (!flag) {
+      notFound()
+    }
+  }, [pathname,globalPath])
+
 }
 export default useAuth

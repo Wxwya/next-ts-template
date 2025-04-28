@@ -24,11 +24,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
       <Sidebar   />
-      <SidebarInset className=' overflow-x-hidden h-screen'>
+      <SidebarInset className=' overflow-x-hidden h-screen overflow-hidden'>
         <AppMainHead  />
         <Suspense fallback={<div className='w-full h-full flex items-center justify-center'>Loading...</div> }>
-        <BlurFade delay={0.25} variant={variants} className=" flex-grow" inView>
-          <div className=" h-full p-4 auth-container">{children}</div>
+        <BlurFade delay={0.25} variant={variants} className="h-full overflow-hidden" inView>
+            <div className="  p-4 auth-container  h-full overflow-auto">
+              {children}
+            </div>
           </BlurFade>
           </Suspense>
       </SidebarInset>

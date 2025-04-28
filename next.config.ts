@@ -15,6 +15,17 @@ const nextConfig: NextConfig = {
         destination: '/admin/table',
         permanent: false, 
       },
+      {
+        source: "/admin/system",
+        destination: "/admin/system/dict",
+        permanent: false,
+      },
+      {
+        source: "/admin/user",
+        destination: "/admin/user/system",
+        permanent: false,
+
+      }
     ]
   },
 

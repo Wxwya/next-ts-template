@@ -5,7 +5,6 @@ import { SidebarMenuButton, SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubBu
 import useSystemStore,{ onChangeMenuGroupKeys } from "@/store/system";
 import { useRouter,usePathname } from "next/navigation";
 import { isExternal } from "@/utils/vaildate";
-import type {MenuStruct } from "./menu"
 
 const SubMenuItem = ({path,title,icon,routes}: MenuStruct) => {
   const router = useRouter();

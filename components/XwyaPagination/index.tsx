@@ -147,7 +147,7 @@ export default function XwyaPagination(props: PaginationpRrops) {
            {/* <span>上一页</span> */}
         </PaginationItem>
         {pagenum.map((item,index:number) => (
-          <PaginationItem className=' rounded-lg' style={{ background: currentPage === item ? 'black' : '', color: currentPage === item ? 'white' : '' }} key={`${item}-${index}`}>
+          <PaginationItem className=' rounded-lg' style={{ background: currentPage === item ? 'hsl(var(--primary))' : '', color: currentPage === item ? 'hsl(var(--primary-foreground))' : '' }} key={`${item}-${index}`}>
             {item == '...' ? <PaginationEllipsis /> : <PaginationLink  onClick={() => onChange((item as number), pageSize)}>{item}</PaginationLink>}
           </PaginationItem>
         ))}

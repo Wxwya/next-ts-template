@@ -14,3 +14,17 @@ export const generateRandomId = (length: number = 16): string => {
   }
   return result;
 }
+
+/**
+ * @param basePath 需要匹配的路径
+ * @returns 
+ * @description 生成动态路由的匹配正则
+ * * @example generateRegex('/user/:id') // /^\/user\/([^\/]+)(\/.*|\\?.*)?$/
+ */
+export function generateRegex(basePath) {
+  // escape any special characters in the basePath
+  const escapedPath = basePath.replace(/[.*+?^=!:${}()|\[\]\/\\]/g, '\\$&');
+  
+  // return the dynamic regex
+  return new RegExp(`^${escapedPath}(\\/.*|\\?.*)?$`);
+}

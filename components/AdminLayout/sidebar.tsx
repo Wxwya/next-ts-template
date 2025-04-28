@@ -1,11 +1,16 @@
+"use client";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarMenu, SidebarGroupContent, SidebarHeader, SidebarFooter } from '@/components/ui/sidebar'
 import MenuItem from './menuItem'
 import SubMenuItem from '@/components/AdminLayout/subMenuItem'
 import AppSidebarHeader from './sidebarHeader'
 import AppSidebarFooter from '@/components/AdminLayout/sidebarFooter'
-import { sidebarHead,sidebarFoot } from '@/utils/settings'
+import { sidebarHead, sidebarFoot } from '@/utils/settings'
+import useUserStore from '@/store/user'
 import { menu } from './menu'
+import { useMemo } from 'react';
 const AppSidebar = () => {
+  const menus = useUserStore(state => state.menus)
+  const resultMenus = useMemo(()=>([...menu,...menus]),[menus])
   return (
     <Sidebar collapsible="icon"  variant="sidebar">
       {sidebarHead?<SidebarHeader  ><AppSidebarHeader /></SidebarHeader>:null} 
@@ -13,7 +18,7 @@ const AppSidebar = () => {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {menu.map((item) =>
+              {resultMenus.map((item) =>
                 item.routes && item.routes.length ? (
                   <SubMenuItem key={item.path}  {...item} />
                 ) : (

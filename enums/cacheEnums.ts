@@ -10,6 +10,11 @@ export enum TokenEnums {
   TOKEN_KEY = "token",
   REFRESH_KEY = "refresh_token",
 }
+export enum OptionsKeyEnums { 
+  STATUS = "status",
+  SEX = "sex",
+  YESNO = "yesno",
+}
 
 export const VERSION = "version"
 

@@ -3,7 +3,6 @@ import React, { useEffect,useState,memo } from "react";
 import { isExternal } from "@/utils/vaildate";
 import { useRouter,usePathname } from "next/navigation";
 import { SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
-import { MenuStruct } from "./menu";
 // let iconActiveColor = "#0ABD52"
 // let iconDefaultColor = "#8F9BB3"
 const MenuItem = ({ title, icon,path }: MenuStruct) => {

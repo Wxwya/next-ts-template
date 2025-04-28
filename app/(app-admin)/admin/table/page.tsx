@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react'
 import XwyaTable, { type TableColumns} from '@/components/XwyaTable';
 import usePage, { PageType } from '@/hooks/use-page';
-import useUserStore from '@/store/user';
 import {generateRandomId} from "@/utils"
 type Invoice = {
   invoice: string;
@@ -84,7 +83,6 @@ const returnData =  () => {
 }
 const TablePage = () => {
   const { data, loading, page, total, setData, setLoading, setPage, setTotal } = usePage()
-  const userInfo = useUserStore(state=> state.userInfo)
   const getData = async (page:PageType ={pageNum:1,pageSize:10}) => {
     setLoading(true)
     const res = await returnData() as any[]

@@ -40,6 +40,7 @@ const AppMainHead = () => {
     
   }
   useEffect(() => {
+    
     setList(breadcrumbMap[window.location.pathname] || [])
   }, [pathname])
 
