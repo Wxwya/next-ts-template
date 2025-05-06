@@ -99,12 +99,18 @@ const requestHooks: RequestHooks = {
   },
 }
 const handleParamsString = (params: Record<string, any>): string => {
-  return Object.keys(params).length > 0
-    ? '?' +
-        Object.keys(params)
-          .map((key) => `${key}=${encodeURIComponent(params[key])}`)
-          .join('&')
-    : ''
+  const queryParts: string[] = [];
+  Object.entries(params).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((v) => {
+        queryParts.push(`${key}=${encodeURIComponent(v)}`);
+      });
+    } else if (value !== undefined && value !== null) {
+      queryParts.push(`${key}=${encodeURIComponent(value)}`);
+    }
+  });
+
+  return queryParts.length > 0 ? '?' + queryParts.join('&') : '';
 }
 const defaultOptions: RequestDefaultOptions = {
   baseURL: process.env.NEXT_PUBLIC_APP_URL as string,

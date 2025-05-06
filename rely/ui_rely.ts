@@ -62,7 +62,8 @@ export {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose
+  DialogClose,
+  DialogOverlay
 } from "@/components/ui/dialog"
 export {
   Collapsible,

@@ -1,6 +1,6 @@
 import { Fragment, Key, ReactNode } from 'react'
 import { Form, FormField, FormItem, FormControl, FormLabel, FormMessage, FormDescription } from '@/components/ui/form'
-import UploadFile from '@/components/UploadFile'
+import XwyaUploadFile from '@/components/XwyaUploadFile'
 import { Calendar } from '@/components/ui/calendar'
 import {
   Input,
@@ -24,16 +24,18 @@ import { cn } from '@/lib/utils'
 import { formatDate } from '@/utils/day'
 import { zhCN } from 'date-fns/locale'
 import { useWatch,type ControllerFieldState } from 'react-hook-form'
-
-type FormItemTypeProps = 'input' | 'select' | 'radio' | 'checkbox' | 'switch' | 'textarea' | 'upload' | 'date' | 'range'
+import XwyaTreeSelect from '@/components/XwyaTreeSelect'
+import  XwyaMultiSelect  from "@/components/XwyaMultiSelect";
+type FormItemTypeProps = 'input' | 'select' | 'radio' | 'checkbox' | 'switch' | 'textarea' | 'upload' | 'date' | 'range' | 'tree' | 'multiSelect'
 type FormContentProps = {
   placeholder?: string
   startPlaceholder?: string
   endPlaceholder?: string
-  options?: GlobalOptions<string | number |boolean>[]
+  options?: (GlobalOptions<string | number |boolean>[]) | TreeOptions[]
   multiple?: boolean
   accept?: string
   type?: string
+  disabled?: boolean
 }
 type FormItemProps = {
   label: string
@@ -83,7 +85,7 @@ const getTypeFormItem = (
             </FormControl>
           </div>
           {data.item?.description && <FormDescription style={{marginLeft:layout === 'horizontal'?labelWidth+8:undefined}}>{data.item?.description} </FormDescription>}
-          <FormMessage />
+          <FormMessage style={{paddingLeft:layout === 'horizontal'?labelWidth+8:undefined}} />
         </>
       )
     case 'textarea':
@@ -101,7 +103,7 @@ const getTypeFormItem = (
             </FormControl>
           </div>
           {data.item?.description && <FormDescription style={{ marginLeft:layout === 'horizontal'?labelWidth+8:undefined}}>{data.item.description} </FormDescription>}
-          <FormMessage />
+          <FormMessage style={{paddingLeft:layout === 'horizontal'?labelWidth+8:undefined}} />
         </>
       )
     case 'select':
@@ -117,12 +119,12 @@ const getTypeFormItem = (
             <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
                 <SelectTrigger className={`${field.value ? '' : 'text-muted-foreground'} w-full  !outline-0 aria-[invalid=true]:border-destructive  focus:ring-none`}>
-                  <SelectValue placeholder={data.content?.placeholder} />
+                <SelectValue  {...data.content} />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
                 {data.content!.options!.map((item) => (
-                  <SelectItem key={item.value as Key} value={item.value as string}>
+                  <SelectItem key={item.value as Key} value={String(item.value)}>
                     {item.label}
                   </SelectItem>
                 ))}
@@ -130,7 +132,7 @@ const getTypeFormItem = (
             </Select>
           </div>
           {data.item?.description && <FormDescription style={{ marginLeft:layout === 'horizontal'?labelWidth+8:undefined}}>{data.item.description} </FormDescription>}
-          <FormMessage />
+          <FormMessage style={{paddingLeft:layout === 'horizontal'?labelWidth+8:undefined}} />
         </>
       )
     case 'radio':
@@ -148,7 +150,7 @@ const getTypeFormItem = (
                 <div className=" flex gap-2 items-center flex-wrap">
                   {data.content!.options!.map((item) => (
                     <div className="flex items-center space-x-2" key={item.value as Key}>
-                      <RadioGroupItem value={item.value  as string} id={`${item.value}-radio`} />
+                      <RadioGroupItem value={item.value as string} id={`${item.value}-radio`} />
                       <Label htmlFor={`${item.value}-radio`}>{item.label}</Label>
                     </div>
                   ))}
@@ -157,7 +159,7 @@ const getTypeFormItem = (
             </FormControl>
           </div>
           {data.item?.description && <FormDescription style={{ marginLeft:layout === 'horizontal'?labelWidth+8:undefined}}>{data.item.description} </FormDescription>}
-          <FormMessage />
+          <FormMessage style={{paddingLeft:layout === 'horizontal'?labelWidth+8:undefined}} />
         </>
       )
     case 'checkbox':
@@ -192,7 +194,7 @@ const getTypeFormItem = (
             </FormControl>
           </div>
           {data.item?.description && <FormDescription style={{ marginLeft:layout === 'horizontal'?labelWidth+8:undefined}}>{data.item.description} </FormDescription>}
-          <FormMessage />
+          <FormMessage style={{paddingLeft:layout === 'horizontal'?labelWidth+8:undefined}} />
         </>
       )
     case 'switch':
@@ -210,7 +212,7 @@ const getTypeFormItem = (
             </FormControl>
           </div>
           {data.item?.description && <FormDescription style={{ marginLeft:layout === 'horizontal'?labelWidth+8:undefined}}>{data.item.description} </FormDescription>}
-          <FormMessage />
+          <FormMessage style={{paddingLeft:layout === 'horizontal'?labelWidth+8:undefined}} />
         </>
       )
     case 'upload':
@@ -224,11 +226,11 @@ const getTypeFormItem = (
               {data.item.label}
             </FormLabel>
             <FormControl>
-              <UploadFile isError={!!fieldState.error} filelist={field.value} onChange={field.onChange} {...data.content} />
+              <XwyaUploadFile isError={!!fieldState.error} filelist={field.value} onChange={field.onChange} {...data.content} />
             </FormControl>
           </div>
           {data.item?.description && <FormDescription style={{ marginLeft:layout === 'horizontal'?labelWidth+8:undefined}}>{data.item.description} </FormDescription>}
-          <FormMessage />
+          <FormMessage style={{paddingLeft:layout === 'horizontal'?labelWidth+8:undefined}} />
         </>
       )
     case 'date':
@@ -264,7 +266,7 @@ const getTypeFormItem = (
             </FormControl>
           </div>
           {data.item?.description && <FormDescription style={{ marginLeft:layout === 'horizontal'?labelWidth+8:undefined}}>{data.item.description} </FormDescription>}
-          <FormMessage />
+          <FormMessage style={{paddingLeft:layout === 'horizontal'?labelWidth+8:undefined}} />
         </>
       )
     case 'range':
@@ -321,9 +323,45 @@ const getTypeFormItem = (
             </FormControl>
           </div>
           {data.item?.description && <FormDescription style={{ marginLeft: layout === 'horizontal' ? labelWidth + 8:undefined }}>{data.item.description} </FormDescription>}
-          {errStr && <div className='text-[0.8rem] font-medium text-destructive'>{ errStr}</div> }
+          {errStr && <div style={{paddingLeft:layout === 'horizontal'?labelWidth+8:undefined}} className='text-[0.8rem] font-medium text-destructive'>{ errStr}</div> }
           {/* <FormMessage /> */}
         </>
+      )
+      case 'tree':
+        return (
+        <>
+        <div className={cn(layout === 'horizontal' && 'flex', 'gap-2 items-center')}>
+          <FormLabel
+            className={cn(layout === 'vertical' ? 'mb-2' : '', 'block')}
+            style={{ width: labelWidth, textAlign: labelAlign, flexShrink: 0 }}
+          >
+            {data.item.label}
+          </FormLabel>
+            <FormControl>
+              <XwyaTreeSelect isError={!!fieldState.error} value={field.value} onChange={field.onChange}  className='w-full' {...data.content}  options={data.content!.options as TreeOptions[]}/>
+            </FormControl>
+        </div>
+        {data.item?.description && <FormDescription style={{ marginLeft:layout === 'horizontal'?labelWidth+8:undefined}}>{data.item.description} </FormDescription>}
+        <FormMessage style={{paddingLeft:layout === 'horizontal'?labelWidth+8:undefined}} />
+            </>
+      )
+    case 'multiSelect':
+      return (
+        <>
+        <div className={cn(layout === 'horizontal' && 'flex', 'gap-2 items-center')}>
+          <FormLabel
+            className={cn(layout === 'vertical' ? 'mb-2' : '', 'block')}
+            style={{ width: labelWidth, textAlign: labelAlign, flexShrink: 0 }}
+          >
+            {data.item.label}
+          </FormLabel>
+            <FormControl>
+              <XwyaMultiSelect isError={!!fieldState.error} value={field.value} onChange={field.onChange} className='w-full' {...data.content}  options={data.content!.options as GlobalOptions[]} />
+          </FormControl>
+        </div>
+        {data.item?.description && <FormDescription style={{ marginLeft:layout === 'horizontal'?labelWidth+8:undefined}}>{data.item.description} </FormDescription>}
+        <FormMessage style={{paddingLeft:layout === 'horizontal'?labelWidth+8:undefined}} />
+            </>
       )
   }
 }

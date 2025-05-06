@@ -9,7 +9,7 @@ type ViewImageProps = {
   onChangeIndex: (index: number) => void
 }
 
-const ViewImage = ({ filelist, index, onChangeOpen,onChangeIndex }: ViewImageProps) => {
+const XwyaViewImage = ({ filelist, index, onChangeOpen,onChangeIndex }: ViewImageProps) => {
   const onNext = () => {
     if (index == filelist.length - 1) {
       toast.error('已经最后一张了...')
@@ -42,4 +42,4 @@ const ViewImage = ({ filelist, index, onChangeOpen,onChangeIndex }: ViewImagePro
   )
 }
 
-export default ViewImage
+export default XwyaViewImage

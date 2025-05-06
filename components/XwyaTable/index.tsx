@@ -31,6 +31,8 @@ type XwyaTableProps<T> = {
   className?: string
   rowKey?: string
   flex?: boolean
+  select?: boolean,
+  onSelect?: (keys:any[],rows: T[]) => void
 }
 type SortType = 'asc' | 'desc' | undefined
 
@@ -59,11 +61,11 @@ function TableSearch<T>(props: FuncIconProps<T>) {
     setSearch('')
     set((prev) => ({ ...prev, [mapKey]: '' }))
   }
-  useEffect(() => { 
-    if (!map[mapKey]) { 
+  useEffect(() => {
+    if (!map[mapKey]) {
       setSearch('')
     }
-  },[map])
+  }, [map])
   return (
     <XwyaPopover
       content={
@@ -93,7 +95,7 @@ function TableSearch<T>(props: FuncIconProps<T>) {
 }
 function TableFilter<T>(props: FuncIconProps<T>) {
   const { map, mapKey, set, options = [] } = props
-  const [select, setSelect] = React.useState<(string| number)[]>([])
+  const [select, setSelect] = React.useState<(string | number)[]>([])
   const onFilter = () => {
     set((prev) => ({ ...prev, [mapKey]: select }))
   }
@@ -102,10 +104,10 @@ function TableFilter<T>(props: FuncIconProps<T>) {
     set((prev) => ({ ...prev, [mapKey]: [] }))
   }
   useEffect(() => {
-    if (!map[mapKey]) { 
-       setSelect([])
+    if (!map[mapKey]) {
+      setSelect([])
     }
-   },[map])
+  }, [map])
   return (
     <XwyaPopover
       content={
@@ -119,9 +121,9 @@ function TableFilter<T>(props: FuncIconProps<T>) {
                   onCheckedChange={(checked) => {
                     return checked
                       ? select
-                        ? setSelect((perv) => ([...perv, item.value] as string[] | number[]))
-                        : setSelect((_) => ([item.value] as string[] | number[]))
-                      : setSelect((perv) => (perv.filter((value) => value !== item.value) as string[] | number[]))
+                        ? setSelect((perv) => [...perv, item.value] as string[] | number[])
+                        : setSelect((_) => [item.value] as string[] | number[])
+                      : setSelect((perv) => perv.filter((value) => value !== item.value) as string[] | number[])
                   }}
                   checked={(select && select?.includes(item.value)) as boolean}
                 />
@@ -169,10 +171,25 @@ function TableSort<T>(props: FuncIconProps<T>) {
     </>
   )
 }
-const XwyaTable = <T= any,>({ data = [], columns = [], total = 0, onChange, page, loading, className, rowKey = 'id', flex }: XwyaTableProps<T>) => {
+const XwyaTable = <T= any,>({
+  data = [],
+  columns = [],
+  total = 0,
+  onChange,
+  page,
+  loading,
+  className,
+  rowKey = 'id',
+  flex,
+  select,
+  onSelect,
+}: XwyaTableProps<T>) => {
   const [filterMap, setFilterMap] = React.useState<Partial<Record<keyof T, any[]>>>({})
   const [searchMap, setSearchMap] = React.useState<Partial<Record<keyof T, string>>>({})
   const [sortMap, setSortMap] = React.useState<Partial<Record<keyof T, SortType>>>({})
+  const [selectCells, setSelectCells] = React.useState<any[]>([])
+  const [all, setAll] = React.useState(false)
+  const [selectRows, setSelectRows] = React.useState<T[]>([])
   const handleData = useMemo(() => {
     let result: T[] = [...data]
     for (let key in searchMap) {
@@ -196,7 +213,7 @@ const XwyaTable = <T= any,>({ data = [], columns = [], total = 0, onChange, page
             }
             return (a[key] as string).localeCompare(b[key] as string)
           }
-          return (a[key] as number) -(b[key] as number) 
+          return (a[key] as number) - (b[key] as number)
         })
       }
       if (sortMap[key] === 'desc') {
@@ -213,6 +230,30 @@ const XwyaTable = <T= any,>({ data = [], columns = [], total = 0, onChange, page
     }
     return result
   }, [filterMap, searchMap, sortMap, data])
+  const onAllSelect = (checked: boolean) => {
+    let rows = checked ? handleData : []
+    let cells = checked ? handleData.map((item) => item[rowKey]) : []
+    setSelectRows(rows)
+    setSelectCells(cells)
+    setAll(checked)
+    onSelect && onSelect( cells,rows)
+  }
+  const onCellSelect = (checked: boolean, item: T) => {
+    let rows: T[] = []
+    let cells: any[] = []
+    if (checked) {
+      rows = [...selectRows, item]
+      cells = [...selectCells, item[rowKey]]
+    } else {
+      rows = selectRows.filter((value) => value !== item)
+      cells = selectCells.filter((value) => value !== item[rowKey])
+     
+    }
+    setSelectRows(rows)
+    setSelectCells(cells)
+    setAll(rows.length === handleData.length)
+    onSelect && onSelect( cells,rows)
+  }
   const onResetFunc = () => {
     setFilterMap({})
     setSearchMap({})
@@ -224,6 +265,13 @@ const XwyaTable = <T= any,>({ data = [], columns = [], total = 0, onChange, page
           <Table className={cn('w-full', loading ? ' min-h-60 ' : '')}>
             <TableHeader className="bg-[hsl(var(--sidebar-background))] sticky left-0 top-0">
               <TableRow>
+                {select && (
+                  <TableHead className='w-10'>
+                    <div className="w-10 flex items-center justify-center  border-r border-[hsl(var(--sidebar-border))]">
+                      <Checkbox checked={all} onCheckedChange={onAllSelect} />
+                    </div>
+                  </TableHead>
+                )}
                 {columns.map((item: TableColumns<T>, index: number) => (
                   <TableHead key={(item.key as Key) || (item.id as Key)} className={` py-2 font-bold ${item.className}`}>
                     <div
@@ -232,7 +280,7 @@ const XwyaTable = <T= any,>({ data = [], columns = [], total = 0, onChange, page
                     >
                       <div>{typeof item.header === 'function' ? item.header() : item.header}</div>
                       <div className="flex gap-2 items-center">
-                        {item.search && <TableSearch map={searchMap} mapKey={item.key as keyof T } set={setSearchMap} />}
+                        {item.search && <TableSearch map={searchMap} mapKey={item.key as keyof T} set={setSearchMap} />}
                         {item.filter && <TableFilter map={filterMap} mapKey={item.key as keyof T} set={setFilterMap} options={item.filterOptions} />}
                         {item.sort && <TableSort map={sortMap} key={item.key as Key} mapKey={item.key as keyof T} set={setSortMap} />}
                       </div>
@@ -244,35 +292,32 @@ const XwyaTable = <T= any,>({ data = [], columns = [], total = 0, onChange, page
             <TableBody>
               {handleData.map((item: T, index: number) => (
                 <TableRow key={(item[rowKey] || index) as Key} className="last:!border-b">
+                  {select && (
+                    <TableCell className='w-10'>
+                      <div className="w-10 flex items-center justify-center ">
+                        <Checkbox
+                          onCheckedChange={(checked:boolean) => onCellSelect(checked, item)}
+                          checked={selectCells && selectCells?.includes(item[rowKey])}
+                        />
+                      </div>
+                    </TableCell>
+                  )}
                   {columns.map((column: TableColumns<T>) => (
-                    <TableCell key={(column.id as Key) || (column.key as Key) || (index as Key)} className={column.className}>
-                    {column.tooltip ? (
-                      <XwyaTooltip
-                        text={String(
-                          (column.key as string).split('.').reduce((acc, key) => (acc ? acc[key] : ''), item)
-                        )}
-                      >
-                        {typeof column.cell === 'function'
-                          ? column.cell(item, index)
-                          : column.cell ?? 
-                              (column.key as string).split('.').reduce((acc, key) => (acc ? acc[key] : ''), item) as string
-                           }
-                      </XwyaTooltip>
-                    ) : (
-                      typeof column.cell === 'function'
-                        ? column.cell(item, index)
-                        : column.cell ?? 
-                            (column.key as string).split('.').reduce((acc, key) => (acc ? acc[key] : ''), item) as string
-                         
-                    )}
-                  </TableCell>
+                    <TableCell key={(column.id as Key) || (column.key as Key) || (index as Key)} className={column.className}> 
+                        <XwyaTooltip open={column.tooltip} text={String((column.key as string).split('.').reduce((acc, key) => (acc ? acc[key] : ''), item))}>
+                          {typeof column.cell === 'function'
+                            ? column.cell(item, index)
+                            : column.cell ?? ((column.key as string).split('.').reduce((acc, key) => (acc ? acc[key] : ''), item) as string)}
+                        </XwyaTooltip>
+                      
+                    </TableCell>
                   ))}
                 </TableRow>
               ))}
 
               {!loading && !!!total && !!!data.length && (
                 <TableRow>
-                  <TableCell colSpan={columns.length} className="h-24 text-center">
+                  <TableCell colSpan={columns.length} className="absolute inset-0  flex justify-center items-center">
                     暂无数据.
                   </TableCell>
                 </TableRow>
@@ -299,8 +344,7 @@ const XwyaTable = <T= any,>({ data = [], columns = [], total = 0, onChange, page
             </TableBody>
           </Table>
         </div>
-
-        {!!total && (
+        {page&& Math.ceil(total / page?.pageSize) > 1 && (
           <XwyaPagination
             prefix={`共 ${total} 条`}
             className="mt-4 shrink-0"

@@ -2,9 +2,8 @@
 import React from 'react'
 import XwyaForm, { FormItemsProps } from '@/components/XwyaForm'
 import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
 import { Button } from '@/rely/ui_rely'
+import { loadFormController } from '@/utils/handle'
 const schema = z.object({
   input: z.string().nonempty({message:"不能为空"}),
   select: z.string().nonempty({message:"不能为空"}),
@@ -26,7 +25,9 @@ const schema = z.object({
       invalid_type_error: "请选择日期"
     })
   }),
-  upload:z.array(z.string()).nonempty({message:"不能为空"})
+  upload: z.array(z.string()).nonempty({ message: "不能为空" }),
+  tree: z.array(z.string()).nonempty({ message: "不能为空" }),
+  multiSelect: z.array(z.string()).nonempty({ message: "不能为空" })
 })
 
 const defautOptions = [
@@ -34,27 +35,8 @@ const defautOptions = [
   { label: "xiaowu2", value: "xiaowu2" },
 ]
 export default function Simple() {
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
-    defaultValues:{
-      input: '',
-      select: "",
-      textarea: '',
-      checkbox: [],
-      radio:"",
-      switch: false,
-      date:void 0,
-      range: {
-        to: void 0,
-        from: void 0
-      },
-      upload:[]
-    },
-  })
-
-  
   const items: FormItemsProps[] = [
-    { type: "input", item: { label: "input", name: "input" }, content: { placeholder: "6666" } },
+    { type: "input", item: { label: "input", name: "input" }, content: { placeholder: "6666",disabled:true } },
     { type: "textarea", item: {label: "textarea", name: "textarea" }, content: { placeholder: "6666" } },
     { type: "select", item: { label: "select", name: "select" }, content: { placeholder: "6666", options: defautOptions } },
     { type: "checkbox", item: { label: "checkbox", name: "checkbox" }, content: { placeholder: "6666", options: defautOptions } },
@@ -62,9 +44,11 @@ export default function Simple() {
     { type: "switch", item: { label: "switch", name: "switch" }, content: { placeholder: "6666" } },
     { type: "date", item: { label: "date", name: "date" }, content: { placeholder: "6666" } },
     { type: "range", item: { label: "range", name: "range" }, content: { startPlaceholder: "开始时间", endPlaceholder: "结束时间" } },
-    { type: "upload", item: { label: "upload", name: "upload" }, content: {placeholder:"6666"} }
-    
+    { type: "upload", item: { label: "upload", name: "upload" }, content: {placeholder:"6666"} },
+    { type: 'tree', item: { label: "tree", name: "tree" }, content: { placeholder: "6666", options: defautOptions } },
+    {type:'multiSelect',item:{label:"multiSelect",name:"multiSelect"},content:{placeholder:"6666", options: defautOptions }}
   ]
+  const form = loadFormController(items,schema)
   const onFinish = (data: any) => {
     console.log(data)
   }

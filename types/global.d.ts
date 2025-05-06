@@ -13,4 +13,9 @@ declare global {
     icon?: string
     routes?: Omit<MenuStruct,"routes">[] 
   }
+  interface TreeOptions {
+    title: string;
+    value: number;
+    children: TreeOptions[];
+  }
 }

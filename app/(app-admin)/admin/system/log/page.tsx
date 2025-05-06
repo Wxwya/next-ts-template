@@ -46,7 +46,7 @@ const LogPage = () => {
     {
       key: "line",
       header: "错误行",
-      className:"min-w-20",
+      className: "min-w-20",
     },
     {
       key: "create_time",

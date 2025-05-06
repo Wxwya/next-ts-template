@@ -2,9 +2,8 @@
 import React from 'react'
 import XwyaForm, { FormItemsProps } from '@/components/XwyaForm'
 import { z} from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
 import { Button } from '@/rely/ui_rely'
+import { loadFormController } from '@/utils/handle'
 const schema = z.object({
   input: z.string().optional(),
   select: z.string().optional(),
@@ -19,17 +18,7 @@ const defautOptions = [
   { label: 'xiaowu2', value: 'xiaowu2' },
 ]
 export default function Verify() {
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      input: '',
-      select: '',
-      range: {
-        to: void 0,
-        from:void 0,
-      },
-    },
-  })
+
   const items: FormItemsProps[] = [
     { type: 'input', item: { label: 'input', name: 'input',itemWidth:260  }, content: { placeholder: '6666' } },
     // { type: "textarea", item: {label: "textarea", name: "textarea" }, content: { placeholder: "6666" } },
@@ -40,6 +29,7 @@ export default function Verify() {
     // { type: "date", item: { label: "date", name: "date" }, content: { placeholder: "6666" } },
     { type: 'range', item: { label: 'range', name: 'range',itemWidth:320 }, content: { startPlaceholder: '开始时间', endPlaceholder: '结束时间' } },
   ]
+      const form = loadFormController(items,schema)
   const onFinish = (data: any) => {
     console.log(data)
   }

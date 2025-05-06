@@ -10,12 +10,16 @@ export type PageType = {
     pageSize: number,
     pageNum: number
 }
-const usePage = <T=any>(pageSize: number=10) => { 
 
-  const [page,setPage] = useState<PageType>({
+const usePage = <T=any>(pageSize: number=10) => { 
+  const [page, setPage] = useState<PageType>({
     pageSize,
-    pageNum: 1,
+    pageNum: 1
   })
+  const defaultPage:PageType = {
+    pageSize,
+    pageNum: 1
+}
   const [data,setData]= useState<T[]>([])
   const [total,setTotal]= useState<number>(0)
   const [loading,setLoading] = useState<boolean>(false)
@@ -27,7 +31,8 @@ const usePage = <T=any>(pageSize: number=10) => {
     setPage,
     setData,
     setTotal,
-    setLoading
+    setLoading,
+    defaultPage
   }
 }
 export default usePage

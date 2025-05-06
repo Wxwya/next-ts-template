@@ -57,8 +57,8 @@ class HttpRequst {
         !config?.isAuth && this.addTask<T>(options, config,resolve)
       }
       let bodyOptions = await this.options.requestHooks.beforeRequest(options, config)
-      const req = await fetchRequest.request<T>(bodyOptions, config)
       if (!this.isRefreshing || config?.isAuth) { 
+        const req = await fetchRequest.request<T>(bodyOptions, config)
         resolve(req)
       }
     })

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React, {useRef, useState,InputHTMLAttributes } from 'react'
 import { uploadFile } from '@/api/system';
 import toast  from 'react-hot-toast';
-import ViewImage from '@/components/VIewImage';
+import XwyaViewImage from '@/components/XwyaViewImage';
 import { cn } from '@/lib/utils';
 type UploadFileProps = InputHTMLAttributes<HTMLInputElement> & {
   onChange: (filelist: string[]) => void
@@ -11,7 +11,7 @@ type UploadFileProps = InputHTMLAttributes<HTMLInputElement> & {
   maxCount?: number
   isError?:boolean
 }
-const UploadFile = (config:UploadFileProps) => {
+const XwyaUploadFile = (config:UploadFileProps) => {
   const uploadRef = useRef<HTMLInputElement | null>(null)
   const [isOpen, setIsOpen] = useState(false)
   const { onChange, filelist=[],maxCount=1,isError, ...restConfig } = config
@@ -72,10 +72,10 @@ const UploadFile = (config:UploadFileProps) => {
       </div>
       <input onChange={handleFileChange}  className="w-0 h-0 hidden"   {...restConfig} ref={uploadRef}  type="file"  />
       {isOpen && (
-        <ViewImage filelist={filelist} index={imgIndex} onChangeIndex={ setImgIndex} onChangeOpen={setIsOpen} />
+        <XwyaViewImage filelist={filelist} index={imgIndex} onChangeIndex={ setImgIndex} onChangeOpen={setIsOpen} />
       )}
     </div>
   )
 }
 
-export default UploadFile
+export default XwyaUploadFile

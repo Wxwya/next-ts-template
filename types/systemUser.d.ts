@@ -24,6 +24,7 @@ declare namespace SystemUser {
     routes: Route[]
     status: boolean
     username: string
+    email?:string
   }
   interface GetUserListApi {
     userList: SystemUser.UserInfo[]

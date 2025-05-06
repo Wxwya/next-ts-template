@@ -82,5 +82,10 @@ export const breadcrumbMap:Record<string,BreadcrumbStruct[]> = {
   "/admin/system/log": [
     { type: "page", title: "系统设置", href: "/admin/system" },
     { type: "page", title: "日志管理", href: "/admin/system/log" },
+  ],
+  "/admin/system/subDict": [
+    { type: "page", title: "系统设置", href: "/admin/system" },
+    { type: "link", title: "字典管理", href: "/admin/system/dict" },
+    { type: "page", title: "字典配置", href: "/admin/system/subDict" },
   ]
 }
