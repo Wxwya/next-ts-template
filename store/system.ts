@@ -4,7 +4,6 @@ import { persist } from "zustand/middleware";
 import { createSelectors } from "@/utils/createStore";
 
 class StoreState  {
-  theme:string = "dark" // 默认深色主题
   menuGroupKeys: string[] = [] // 菜单组
   collapsed: boolean = true
 }

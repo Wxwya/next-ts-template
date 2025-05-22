@@ -11,8 +11,8 @@ type XwyaPopoverProps = {
 }
 const XwyaPopover = ({ children, content, contentProps, popoverProps }: XwyaPopoverProps) => {
   return <Popover {...popoverProps}>
-    <PopoverTrigger>{ children}</PopoverTrigger>
-    <PopoverContent  {...contentProps}>{ typeof content === "function" ? content() : content}</PopoverContent>
+    <PopoverTrigger asChild>{ children}</PopoverTrigger>
+    <PopoverContent   {...contentProps}>{ typeof content === "function" ? content() : content}</PopoverContent>
 </Popover>
 }
 export default XwyaPopover

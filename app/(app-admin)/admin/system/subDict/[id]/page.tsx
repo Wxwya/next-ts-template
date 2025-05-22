@@ -68,10 +68,10 @@ const SubDict = () => {
       key: 'id',
       cell: (row) => (
         <div className="flex gap-2 items-center">
-          <span className=" text-blue-500 cursor-pointer" onClick={() => onOpen(row)}>
+          <span data-auth="xwya:dict:update" className=" text-blue-500 cursor-pointer" onClick={() => onOpen(row)}>
             编辑
           </span>
-          <span className=" text-red-500 cursor-pointer" onClick={() => onDelete(row)}>
+          <span data-auth="xwya:dict:delete" className=" text-red-500 cursor-pointer" onClick={() => onDelete(row)}>
             删除
           </span>
         </div>
@@ -141,8 +141,8 @@ const SubDict = () => {
           <div className=" flex gap-2">
             <XwyaButton tooltipText="搜索" type="submit" icon="solar--magnifer-linear" />
             <XwyaButton tooltipText="重置" variant="outline" type="reset" onClick={onReset} icon="solar--refresh-linear" />
-            <XwyaButton tooltipText="新增类型" className=" bg-blue-500 hover:bg-blue-600" type="button" onClick={() => onOpen()} icon="solar--add-circle-linear" />
-            <XwyaButton tooltipText="批量删除" type="button" variant="destructive" onClick={() => onDelete()} icon="solar--trash-bin-minimalistic-broken" />
+            <XwyaButton data-auth="xwya:dict:add" tooltipText="新增类型" className=" bg-blue-500 hover:bg-blue-600" type="button" onClick={() => onOpen()} icon="solar--add-circle-linear" />
+            <XwyaButton data-auth="xwya:dict:delete" tooltipText="批量删除" type="button" variant="destructive" onClick={() => onDelete()} icon="solar--trash-bin-minimalistic-broken" />
           </div>
         }
       </XwyaForm>

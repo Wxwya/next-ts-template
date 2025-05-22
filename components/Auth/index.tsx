@@ -5,7 +5,7 @@ import { onChangeUserInfo,onChangeDefaultOptions,onChangeMenus, onChangeGlobalPa
 import {getDefaultDict } from "@/api/system";
 import { getUserInfo} from "@/api/user"
 import path from "path";
-let paths:string[] = ["/admin/form","/admin/table","/admin/modal"]
+let paths:string[] = ["/admin/form","/admin/table","/admin/other/modal","/admin/other/editor","/admin/other/markdown","/admin/other/chart"]
 const Auth = () => {
   useAuth()
   const handleMenus = (routes:SystemUser.Route[]) => { 

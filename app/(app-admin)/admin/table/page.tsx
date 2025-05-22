@@ -69,7 +69,7 @@ const columns: TableColumns<Invoice>[] = [
   {
     key: "paymentMethod",
     header: "Payment Method",
-    cell: (item) => (<div data-auth={item.paymentMethod===0?"admin":"66" }>{item.paymentMethod}</div>)
+    cell: (item) => (<div data-auth={item.paymentMethod===0?"xwya:dict:update":"66" }>{item.paymentMethod}</div>)
   }
 ]
 const returnData =  () => { 

@@ -1,0 +1,96 @@
+
+/* 工具栏背景色和字体（跟随系统 ）*/
+.w-e-toolbar{
+  background: inherit;
+  border:none !important;
+  border-bottom: 1px solid hsl(var(--sidebar-border)) !important;
+}
+.w-e-bar{
+  background: inherit;
+  color: inherit;
+  border:1px solid hsl(var(--sidebar-border));
+}
+/* 设置工具栏 | 线颜色（跟随系统） */
+.w-e-bar-divider{
+  background: hsl(var(--sidebar-border)) !important;
+}
+/* 设置工具栏字体颜色及图标颜色和hover样式 */
+.w-e-bar-item>button{
+  color:initial;
+}
+.w-e-bar-item>.active{
+  background: hsl(var(--sidebar-accent)) !important ;
+}
+.w-e-bar-item>button>svg{
+  fill:hsl(var(--foreground));
+}
+.w-e-bar-item>button:hover{
+  background: hsl(var(--sidebar-accent)) !important ;
+  color: initial;
+}
+/* 设置工具栏组 hover 背景色和字体边框色 */
+.w-e-bar-item-group >.w-e-bar-item-menus-container{
+  background: hsl(var(--popover));
+  border:1px solid hsl(var(--sidebar-border));
+}
+/* 设置字体字号行高下拉框等 hover 背景色和字体边框色 */
+.w-e-select-list{
+  background: hsl(var(--popover));
+  color: initial;
+  border:1px solid hsl(var(--sidebar-border));
+}
+.w-e-select-list> ul>.selected{
+  background: hsl(var(--sidebar-accent));
+}
+.w-e-select-list> ul>li:hover{
+  background: hsl(var(--sidebar-accent));
+}
+
+/*  设置字体颜色 背景色 添加链接背景色 */
+.w-e-modal,.w-e-drop-panel{
+
+  background: hsl(var(--background));
+  border:1px solid hsl(var(--sidebar-border));
+  color: inherit;
+}
+/* 设置添加链接 input 和 button样式 */
+.w-e-modal input{
+  border:  1px solid hsl(var(--input)) !important;
+  background:inherit !important;
+  color: inherit !important;
+}
+.w-e-modal button{
+  background: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  @apply rounded-md shadow text-sm h-9 px-4 py-2;
+}
+/* 颜色选择器部分 */
+/* 设置颜色选中器li 边框线 */
+.w-e-drop-panel>.w-e-panel-content-color>li{
+  border:1px solid hsl(var(--sidebar-border));
+}
+/* 设置颜色选中器 颜色边框线 */
+.w-e-drop-panel>.w-e-panel-content-color>li>.color-block{
+  border:1px solid #999888 !important;
+}
+/* 表格部分 */
+.w-e-drop-panel>.w-e-panel-content-table{
+  background: inherit;
+  color:initial;
+}
+.w-e-drop-panel>.w-e-panel-content-table>table>tr>td{
+  border-color: hsl(var(--sidebar-border));
+}
+.w-e-drop-panel>.w-e-panel-content-table>table>tr>.active{
+  background-color: hsl(var(--sidebar-accent)) ;
+  background-color: rgba(188,188,188,0.2);
+}
+
+/* 编辑器背景色和字体（跟随系统） */
+.w-e-text-container{
+  background: inherit;
+  color: inherit;
+  
+}
+
+

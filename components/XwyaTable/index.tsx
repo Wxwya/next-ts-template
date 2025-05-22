@@ -304,7 +304,7 @@ const XwyaTable = <T= any,>({
                   )}
                   {columns.map((column: TableColumns<T>) => (
                     <TableCell key={(column.id as Key) || (column.key as Key) || (index as Key)} className={column.className}> 
-                        <XwyaTooltip open={column.tooltip} text={String((column.key as string).split('.').reduce((acc, key) => (acc ? acc[key] : ''), item))}>
+                        <XwyaTooltip open={column.tooltip}  text={String((column.key as string).split('.').reduce((acc, key) => (acc ? acc[key] : ''), item))}>
                           {typeof column.cell === 'function'
                             ? column.cell(item, index)
                             : column.cell ?? ((column.key as string).split('.').reduce((acc, key) => (acc ? acc[key] : ''), item) as string)}

@@ -140,4 +140,5 @@ module.exports = {
   plugins: [
     require("tailwindcss-animate"),addIconSelectors(["solar"]), 
 	],
+	
 };

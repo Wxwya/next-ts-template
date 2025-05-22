@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata,Viewport } from 'next'
 import { Toaster } from 'react-hot-toast'
 import { ThemeProvider } from 'next-themes'
 import { Geist, Geist_Mono } from 'next/font/google'
@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     
   },
   description: 'next-ts-templte',
+}
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover', // 全面屏适配
 }
 const geistSans = Geist({
   variable: '--font-geist-sans',

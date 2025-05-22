@@ -78,6 +78,12 @@ export {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+export {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 export { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 export { Label } from "@/components/ui/label"

@@ -71,7 +71,7 @@ const useAuth = () => {
     }
   }, [userInfo])
   useEffect(() => { 
-    if(!globalPath.length) return 
+    if (!globalPath.length) return 
     const flag = globalPath.some((path) => {
       const regex = generateRegex(path)
       return  (regex.test(pathname))

@@ -23,10 +23,33 @@ export const menu: MenuStruct[] = [
     icon: "solar--asteroid-bold-duotone",
   },
   {
-    path: "/admin/modal",
-    title: "模态框示例",
+    path: '/admin/other',
+    title: "其他示例",
     icon: "solar--asteroid-bold-duotone",
+    routes: [
+      {
+        path: "/admin/other/modal",
+        title: "模态框示例",
+        icon: "solar--asteroid-bold-duotone",
+      },
+      {
+        path: "/admin/other/editor",
+        title: "富文本示例",
+        icon: "solar--asteroid-bold-duotone",
+      },
+      {
+        path: "/admin/other/markdown",
+        title: "markdown示例",
+        icon: "solar--asteroid-bold-duotone",
+      },
+      {
+        path: "/admin/other/chart",
+        title: "聊天框示例",
+        icon: "solar--asteroid-bold-duotone",
+      },
+    ]
   },
+  
   // {
   //   path: "/about",
   //   title: "关于我们",
@@ -52,8 +75,21 @@ export const breadcrumbMap:Record<string,BreadcrumbStruct[]> = {
   "/admin/form": [
     {type:"page",title:"表单示例",href:"/admin/form"},
   ],
-  "/admin/modal": [
-    {type:"page",title:"模态框示例",href:"/admin/modal"},
+  "/admin/other/modal": [
+    {type:"page",title:"其他示例",href:"/admin/other"},
+    {type:"page",title:"模态框示例",href:"/admin/other/modal"},
+  ],
+  "/admin/other/editor": [
+    { type: "page", title: "其他示例", href: "/admin/other" },
+    { type: "page", title: "富文本示例", href: "/admin/other/editor" },
+  ],
+  "/admin/other/markdown": [
+    { type: "page", title: "其他示例", href: "/admin/other" },
+    { type: "page", title: "markdown示例", href: "/admin/other/markdown" },
+  ],
+  "/admin/other/chart": [
+    { type: "page", title: "其他示例", href: "/admin/other" },
+    { type: "page", title: "聊天框示例", href: "/admin/other/chart" },
   ],
   "/admin/user/system": [
     { type: "page", title: "用户管理", href: "/admin/user" },
@@ -87,5 +123,15 @@ export const breadcrumbMap:Record<string,BreadcrumbStruct[]> = {
     { type: "page", title: "系统设置", href: "/admin/system" },
     { type: "link", title: "字典管理", href: "/admin/system/dict" },
     { type: "page", title: "字典配置", href: "/admin/system/subDict" },
-  ]
+  ],
+  "/admin/user/subMenu": [
+    { type: "page", title: "用户管理", href: "/admin/user" },
+    { type: "link", title: "菜单管理", href: "/admin/user/menu" },
+    { type: "page", title: "子菜单管理", href: "/admin/user/subMenu" },
+  ],
+  "/admin/user/buttonPermissions": [
+    { type: "page", title: "用户管理", href: "/admin/user" },
+    { type: "link", title: "权限管理", href: "/admin/user/permissions" },
+    { type: "page", title: "按钮权限管理", href: "/admin/user/buttonPermissions" },
+  ],
 }
