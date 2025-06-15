@@ -286,20 +286,20 @@ const debounceComputeAverageHeight = useMemo(() => {
   }, [data])
 
   return (
+    // style={{ '-webkit-overflow-scrolling': 'touch' }}
     <div
       className="h-full overflow-auto relative outline-none"
-      style={{ '-webkit-overflow-scrolling': 'touch' }}
       ref={containerRef}
       onScroll={handleScroll} // 通过 requestAnimationFrame 优化滚动
     >
-      <div style={{ transform: `translateY(${paddingTop}px)`, paddingBottom, overflowAnchor: 'none',opacity: isBottom && !isMoveBottom ? 0 : 1, }}>
+      <div style={{ transform: `translateY(${paddingTop}px)`, paddingBottom, overflowAnchor: 'none' }}>
          {isBottom && (
           <div>
             {loading && <div className="text-2xl text-center py-2">loading...</div>}
             {!isMore && <div className="text-2xl text-center py-2">没有更多了</div>}
           </div>
         )}
-        <div className={isEmpty ? 'min-h-full flex items-center justify-center' : ''}>
+        <div style={{opacity: isBottom && !isMoveBottom ? 0 : 1,}} className={isEmpty ? 'min-h-full flex items-center justify-center' : ''}>
           {visibleData.map((item, index) => (
             <div style={{ overflowAnchor: 'none', backgroundColor: activeId == item.id ? 'blue' : '' }} data-height={itemRefs.current[index + startIndex]} key={item.id} data-index={index + startIndex} ref={(el) => setItemRef(el, index + startIndex)}>
                 {cloneEl(item)}

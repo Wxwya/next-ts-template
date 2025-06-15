@@ -25,6 +25,7 @@ declare namespace SystemUser {
     status: boolean
     username: string
     email?:string
+    avatar?:string
   }
   interface GetUserListApi {
     userList: SystemUser.UserInfo[]

@@ -42,7 +42,7 @@ const XwyaChartInput = (props: XwyaChartInputProps) => {
           <XwyaButton variant='ghost' className=' text-lg p-1 h-auto' icon='solar--microphone-2-bold' />
         </XwyaTooltip> */}
         <XwyaTooltip text='发送'  open>
-          <XwyaButton variant={isMobile?'ghost':'default' } className=' text-lg p-1 h-auto' icon='solar--plain-3-bold' >
+          <XwyaButton variant={isMobile?'ghost':'default' } className=' text-lg py-1 px-1 pr-2 h-auto' icon='solar--plain-3-bold' >
             { !isMobile &&  <span className=' text-sm'>发送</span>}
           </XwyaButton>
         </XwyaTooltip>

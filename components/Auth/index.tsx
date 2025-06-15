@@ -30,13 +30,14 @@ const Auth = () => {
   }
   const getInfo = async () => { 
     // 获取用户信息
-    const res = await getUserInfo()
-    if (res.code === 200) { 
-      onChangeUserInfo(res.data)
-      const menus = handleMenus(res.data!.routes)
-      onChangeGlobalPath(paths)
-      onChangeMenus(menus)
-    }
+    // const res = await getUserInfo()
+    // if (res.code === 200) { 
+    //   onChangeUserInfo(res.data)
+    //   const menus = handleMenus(res.data!.routes)
+    //   onChangeGlobalPath(paths)
+    //   onChangeMenus(menus)
+    // }
+    onChangeUserInfo({username:"xwya"})
   }
   const getDefaultDictOption = async () => {
     const res = await getDefaultDict()
@@ -55,7 +56,7 @@ const Auth = () => {
   }
   useEffect(() => { 
     getInfo()
-    getDefaultDictOption()
+    // getDefaultDictOption()
     },[])
   return <></>
 }

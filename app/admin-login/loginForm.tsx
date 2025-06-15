@@ -33,13 +33,22 @@ const LoginForm = () => {
     },
   })
   const onFinish = async (values: z.infer<typeof formSchema>) => {
-    const res = await login(values) as any
-    if (res.code === 200) {
-      cache.setCookie(IsLogin, true)
-      cache.setCookie(TokenEnums.TOKEN_KEY, res.access_token)
-      cache.setCookie(TokenEnums.REFRESH_KEY, res.refresh_token)
-      router.push(redirect ? decodeURIComponent(redirect) : '/admin')
-    }
+    // const res = await login(values) as any
+    // if (res.code === 200) {
+    //   cache.setCookie(IsLogin, true)
+    //   cache.setCookie(TokenEnums.TOKEN_KEY, 213213)
+    //   cache.setCookie(TokenEnums.REFRESH_KEY, 465456)
+    //   // cache.setCookie(TokenEnums.TOKEN_KEY, res.access_token)
+    //   // cache.setCookie(TokenEnums.REFRESH_KEY, res.refresh_token)
+    //   router.push(redirect ? decodeURIComponent(redirect) : '/admin')
+    // }
+    cache.setCookie(IsLogin, true)
+    cache.setCookie(TokenEnums.TOKEN_KEY, 213213)
+    cache.setCookie(TokenEnums.REFRESH_KEY, 465456)
+    console.log("跳转");
+    console.log(redirect);
+    
+    router.push(redirect ? decodeURIComponent(redirect) : '/admin')
   }
   return (
     <XwyaForm items={items} form={form} labelAlign="left" layout="vertical" onFinish={onFinish}>

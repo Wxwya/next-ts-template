@@ -1,6 +1,6 @@
 
 
-import { create } from "zustand";
+import { create,type UseBoundStore,StoreApi } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { createSelectors } from "@/utils/createStore";
 class UserStore { 
@@ -38,4 +38,4 @@ export const onChangeGlobalPath = (globalPath: string[]) => {
    globalPath:[...state.globalPath,...globalPath]
   }));
 }
-export default createSelectors(useUserStore);
+export default createSelectors(useUserStore) as UseBoundStore<StoreApi<UserStore>>;

@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create,type UseBoundStore,StoreApi } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist } from "zustand/middleware";
 import { createSelectors } from "@/utils/createStore";
@@ -46,7 +46,7 @@ export const onChangeCollapsed = (collapsed:boolean) => {
     }
   })
 }
-export default createSelectors(useSystemStore)
+export default createSelectors(useSystemStore)  as UseBoundStore<StoreApi<StoreState>>
 /**
  *
  *   一. 初使用 zustand (pnpm add zustand -D)

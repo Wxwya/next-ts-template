@@ -61,6 +61,12 @@ const columns: TableColumns<Invoice>[] = [
   {
     key: "paymentStatus",
     header: "Payment Status",
+    filter: true,
+    filterOptions:[
+      {label:"Paid","value":"Paid"},
+      {label:"Pending","value":"Pending"},
+    ]
+    
   },
   {
     key: "totalAmount",
@@ -69,6 +75,7 @@ const columns: TableColumns<Invoice>[] = [
   {
     key: "paymentMethod",
     header: "Payment Method",
+    sort:true,
     cell: (item) => (<div data-auth={item.paymentMethod===0?"xwya:dict:update":"66" }>{item.paymentMethod}</div>)
   }
 ]
@@ -95,14 +102,17 @@ const TablePage = () => {
   const onChange = (pageNum: number, pageSize: number) => {
     getData({ pageNum, pageSize })
   }
-
+  const onFuncCallback = (obj:any)=>{
+    console.log(obj);
+    
+  }
   useEffect(() => { 
     getData()
   },[])
   return (
-    <>
-      <XwyaTable  data={data} page={page} total={total} loading={loading}  onChange={onChange} columns={columns} />
-    </>
+    <div className=' h-full'>
+      <XwyaTable flex onFuncCallback={onFuncCallback}  data={data} page={page} total={total} loading={loading}  onChange={onChange} columns={columns} />
+    </div>
   )
 }
 
